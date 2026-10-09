@@ -1,440 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radha Kumari — .NET Backend Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Radha Kumari | C# .NET Backend Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0B1420;
-    --surface:#121F2E;
-    --surface-alt:#17293C;
-    --line:#223447;
-    --text:#E7EEF4;
-    --muted:#90A4B7;
-    --signal:#33D6A0;
-    --amber:#F2A65A;
-    --radius:10px;
-    --maxw:1040px;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif;margin:0;letter-spacing:-0.01em;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
-  a{color:inherit;}
-  ::selection{background:var(--signal);color:#06110C;}
-  :focus-visible{outline:2px solid var(--signal);outline-offset:3px;}
-
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
-
-  /* NAV */
-  header{
-    position:sticky;top:0;z-index:50;
-    background:rgba(11,20,32,0.85);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  nav.wrap{display:flex;align-items:center;justify-content:space-between;height:64px;}
-  .brand{font-size:15px;font-weight:600;letter-spacing:0.02em;}
-  .brand .dot{color:var(--signal);}
-  .navlinks{display:flex;gap:28px;font-size:13px;color:var(--muted);}
-  .navlinks a{text-decoration:none;transition:color .2s;}
-  .navlinks a:hover{color:var(--text);}
-  .navlinks .mono{font-size:12px;}
-
-  /* HERO */
-  .hero{padding:88px 0 64px;position:relative;}
-  .eyebrow{
-    display:inline-flex;align-items:center;gap:8px;
-    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--signal);
-    border:1px solid rgba(51,214,160,0.3);background:rgba(51,214,160,0.06);
-    padding:5px 12px;border-radius:100px;margin-bottom:22px;
-  }
-  .eyebrow .pulse{width:6px;height:6px;border-radius:50%;background:var(--signal);
-    box-shadow:0 0 0 0 rgba(51,214,160,.6);animation:pulse 2s infinite;}
-  @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(51,214,160,.5);}
-    70%{box-shadow:0 0 0 8px rgba(51,214,160,0);}
-    100%{box-shadow:0 0 0 0 rgba(51,214,160,0);}
-  }
-  .hero h1{font-size:clamp(34px,5.5vw,54px);line-height:1.08;font-weight:700;max-width:720px;}
-  .hero h1 .accent{color:var(--signal);}
-  .hero p.lede{color:var(--muted);font-size:17px;max-width:560px;margin-top:18px;}
-  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;}
-  .btn{
-    font-family:'Inter',sans-serif;font-weight:600;font-size:14px;
-    padding:12px 20px;border-radius:8px;text-decoration:none;
-    display:inline-flex;align-items:center;gap:8px;transition:transform .15s, background .2s;
-  }
-  .btn-primary{background:var(--signal);color:#06140F;}
-  .btn-primary:hover{transform:translateY(-1px);background:#4fe0b3;}
-  .btn-ghost{border:1px solid var(--line);color:var(--text);}
-  .btn-ghost:hover{border-color:var(--signal);color:var(--signal);}
-
-  /* CONSOLE */
-  .console{
-    margin-top:56px;
-    background:var(--surface);
-    border:1px solid var(--line);
-    border-radius:var(--radius);
-    overflow:hidden;
-    box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
-  }
-  .console-bar{
-    display:flex;align-items:center;gap:8px;
-    padding:11px 16px;border-bottom:1px solid var(--line);background:var(--surface-alt);
-  }
-  .console-bar span{width:9px;height:9px;border-radius:50%;background:#33424F;}
-  .console-title{margin-left:8px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);}
-  .console-body{padding:20px 22px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#B9CADA;min-height:190px;}
-  .console-body .line{opacity:0;animation:reveal .35s forwards;white-space:pre-wrap;}
-  .console-body .ok{color:var(--signal);}
-  .console-body .tag{color:var(--amber);}
-  .caret{display:inline-block;width:7px;height:14px;background:var(--signal);margin-left:2px;vertical-align:-2px;animation:blink 1s steps(1) infinite;}
-  @keyframes reveal{to{opacity:1;}}
-  @keyframes blink{50%{opacity:0;}}
-
-  /* SECTION SHELL */
-  section{padding:64px 0;border-top:1px solid var(--line);}
-  .section-head{display:flex;align-items:baseline;gap:14px;margin-bottom:36px;}
-  .section-head h2{font-size:22px;}
-  .section-head .idx{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--signal);}
-  .section-head .rule{flex:1;height:1px;background:var(--line);}
-
-  /* ABOUT */
-  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
-  .about-grid p{color:var(--muted);font-size:15.5px;}
-  .stat-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;}
-  .stat-card + .stat-card{margin-top:12px;}
-  .stat-card .num{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--signal);}
-  .stat-card .lbl{font-size:12.5px;color:var(--muted);margin-top:2px;}
-
-  /* EXPERIENCE (transaction log style) */
-  .job{
-    border:1px solid var(--line);border-radius:var(--radius);
-    background:var(--surface);padding:24px 26px;margin-bottom:18px;
-    position:relative;
-  }
-  .job-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px;}
-  .job-head h3{font-size:17px;}
-  .job-meta{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);}
-  .job-role{color:var(--signal);font-size:13.5px;font-weight:600;margin-bottom:14px;font-family:'IBM Plex Mono',monospace;}
-  .job ul{margin:0;padding-left:18px;color:var(--muted);font-size:14.5px;}
-  .job li{margin-bottom:7px;}
-  .job li::marker{color:var(--signal);}
-  .status-pill{
-    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--signal);
-    border:1px solid rgba(51,214,160,.3);background:rgba(51,214,160,.06);
-    padding:3px 10px;border-radius:100px;white-space:nowrap;
-  }
-
-  /* SKILLS */
-  .skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;}
-  .skill-cat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;}
-  .skill-cat h4{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;}
-  .chips{display:flex;flex-wrap:wrap;gap:8px;}
-  .chip{
-    font-size:12.5px;padding:6px 11px;border-radius:6px;
-    background:var(--surface-alt);border:1px solid var(--line);color:var(--text);
-  }
-
-  /* EDU + CERTS */
-  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;}
-  .card h3{font-size:16px;margin-bottom:6px;}
-  .card .sub{color:var(--muted);font-size:13.5px;margin-bottom:4px;}
-  .card .mono{font-size:12px;color:var(--signal);}
-  .cert-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;}
-  .cert-row:last-child{border-bottom:none;}
-  .cert-row .src{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;}
-
-  /* FOOTER / CONTACT */
-  footer{padding:64px 0 48px;border-top:1px solid var(--line);}
-  .contact-box{
-    background:var(--surface);border:1px solid var(--line);border-radius:14px;
-    padding:44px 36px;text-align:center;
-  }
-  .contact-box h2{font-size:26px;margin-bottom:10px;}
-  .contact-box p{color:var(--muted);margin-bottom:26px;}
-  .contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
-  .foot-note{text-align:center;color:var(--muted);font-size:12.5px;margin-top:36px;font-family:'IBM Plex Mono',monospace;}
-
-  @media (max-width:760px){
-    .navlinks{display:none;}
-    .about-grid{grid-template-columns:1fr;}
-    .two-col{grid-template-columns:1fr;}
-    .hero{padding:56px 0 44px;}
-  }
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
-  }
+:root{--bg:#F4F7F9;--bg2:#E7EDF1;--surface:#FFFFFF;--ink:#0B1B26;--mute:#4A5E6B;--line:#C8D3DA;--gold:#9A6E00;--goldbg:#F6E9BD;--sig:#0A7F74;--on:#0B1B26;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08131B;--bg2:#0D1E29;--surface:#112633;--ink:#E8F0F4;--mute:#9AB0BC;--line:#23404F;--gold:#E8B83A;--goldbg:#2E2810;--sig:#3FD8C7;--on:#08131B}}
+:root[data-theme="dark"]{--bg:#08131B;--bg2:#0D1E29;--surface:#112633;--ink:#E8F0F4;--mute:#9AB0BC;--line:#23404F;--gold:#E8B83A;--goldbg:#2E2810;--sig:#3FD8C7;--on:#08131B}
+*{box-sizing:border-box}
+html{scroll-padding-top:70px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 "IBM Plex Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;line-height:1.08;margin:0}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav{display:flex;justify-content:space-between;align-items:center;padding:14px 0;gap:16px;flex-wrap:wrap}
+nav b{font:800 20px "Bricolage Grotesque",sans-serif}
+nav div{display:flex;gap:18px;font-size:15px;align-items:center;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--mute)}nav a:hover{color:var(--ink)}
+#theme{font:inherit;font-size:14px;background:none;color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:4px 12px;cursor:pointer}
+.hero{padding:72px 0 80px;background:radial-gradient(900px 400px at 85% 0,var(--goldbg),transparent 70%)}
+.hero .g{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(42px,6.4vw,76px);font-weight:800;letter-spacing:-.025em}
+.hero p{color:var(--mute);max-width:54ch;margin:22px 0 30px;font-size:18px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;padding:13px 22px;border:2px solid var(--ink);border-radius:8px;text-decoration:none;font-weight:500}
+.btn.p{background:var(--gold);border-color:var(--gold);color:var(--on)}
+.stats{display:flex;gap:32px;margin-top:36px;flex-wrap:wrap}
+.stats div{font-size:14px;color:var(--mute)}.stats b{display:block;font:800 28px "Bricolage Grotesque",sans-serif;color:var(--ink)}
+.sim{background:var(--surface);border:2px solid var(--gold);border-radius:18px 40px 18px 18px;overflow:hidden;font:400 14px/1.5 "IBM Plex Mono",ui-monospace,monospace;box-shadow:12px 12px 0 var(--goldbg)}
+.sim header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.chip{width:34px;height:26px;border-radius:5px;border:2px solid var(--gold);background:linear-gradient(90deg,transparent 45%,var(--gold) 45% 55%,transparent 55%),linear-gradient(0deg,transparent 45%,var(--gold) 45% 55%,transparent 55%)}
+.sim ol{list-style:none;margin:0;padding:14px 18px}
+.sim li{display:flex;gap:12px;padding:7px 0;opacity:.22;transition:opacity .3s}
+.sim li.on{opacity:1}.sim li span:first-child{color:var(--sig);width:16px}
+.sim li em{color:var(--mute);font-style:normal;display:block;font-size:13px}
+.sim button{margin:0 18px 18px;font:inherit;padding:6px 12px;border:1px solid var(--line);background:none;color:var(--ink);border-radius:5px;cursor:pointer}
+section{padding:80px 0;border-top:1px solid var(--line)}
+section.alt{background:var(--bg2)}
+h2{font-size:clamp(30px,4.4vw,46px);font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+.lead{color:var(--mute);max-width:64ch;margin:0 0 40px}
+.job{display:grid;grid-template-columns:190px 1fr;gap:32px;padding:28px 0;border-bottom:1px solid var(--line)}
+.job:last-child{border-bottom:0}
+.job small{color:var(--mute);display:block;font-size:15px}
+.job h3{font-size:23px;margin-bottom:4px}
+.job ul{margin:12px 0 0;padding-left:20px}.job li{margin:6px 0}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tags span{border:1px solid var(--gold);background:var(--goldbg);padding:2px 11px;border-radius:99px;font-size:14px}
+.case{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:36px;margin-bottom:28px}
+.case h3{font-size:clamp(24px,3vw,32px);margin-bottom:6px}
+.case .sub{color:var(--mute);margin:0 0 24px}
+.case h4{font:600 18px "Bricolage Grotesque",sans-serif;margin:26px 0 6px}
+.case p{margin:0 0 10px;max-width:70ch}
+.case ul{margin:6px 0 10px;padding-left:20px;max-width:70ch}.case li{margin:5px 0}
+.steps{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
+.steps button{font:500 15px "IBM Plex Sans",sans-serif;padding:9px 14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;cursor:pointer}
+.steps button[aria-selected="true"]{background:var(--gold);border-color:var(--gold);color:var(--on)}
+#panel{border-left:4px solid var(--sig);padding:6px 0 6px 18px;max-width:70ch;min-height:96px}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px}
+.skills h3{font-size:19px;margin-bottom:6px}.skills p{margin:0;color:var(--mute);font-size:16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.two h3{font-size:21px;margin-bottom:6px}.two p,.two ul{color:var(--mute);margin:6px 0}.two ul{padding-left:20px}
+footer{padding:80px 0 56px;border-top:1px solid var(--line);background:var(--bg2)}
+footer h2{margin-bottom:12px}
+footer .links{display:flex;gap:14px;flex-wrap:wrap;margin-top:24px}
+footer small{display:block;margin-top:44px;color:var(--mute)}
+.hero{position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-40% -10% auto -10%;height:140%;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;opacity:.35;-webkit-mask-image:radial-gradient(ellipse at 70% 30%,#000,transparent 70%);mask-image:radial-gradient(ellipse at 70% 30%,#000,transparent 70%);animation:drift 24s linear infinite}
+.hero .g{position:relative;z-index:1}
+.hero h1,.hero p,.hero .btns,.hero .stats{animation:up .9s cubic-bezier(.2,.7,.2,1) both}
+.hero p{animation-delay:.12s}.hero .btns{animation-delay:.24s}.hero .stats{animation-delay:.36s}
+.sim{animation:up .9s .2s cubic-bezier(.2,.7,.2,1) both,glow 5s ease-in-out infinite}
+.seg{display:flex;gap:4px;margin:14px 18px 0;padding:4px;background:var(--bg2);border-radius:10px;font-family:"IBM Plex Sans",sans-serif}
+.seg button{flex:1;margin:0;font:500 14px "IBM Plex Sans",sans-serif;padding:8px;border:0;border-radius:7px;background:none;color:var(--mute);cursor:pointer;transition:background .25s,color .25s}
+.seg button[aria-pressed="true"]{background:var(--gold);color:var(--on)}
+.prog{height:3px;background:var(--line);margin:14px 18px 0;border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--sig);transition:width .6s ease}
+.sim li.on span:first-child{animation:pop .4s ease}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.case,.skills>div{transition:box-shadow .3s,border-color .3s}
+.case:hover{border-color:var(--gold);box-shadow:0 16px 36px rgba(0,0,0,.12)}
+.btn{transition:transform .2s,box-shadow .2s}.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.steps button{transition:background .2s,transform .2s}.steps button:hover{transform:translateY(-1px)}
+#panel{animation:up .4s both}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes drift{to{transform:translate(56px,56px)}}
+@keyframes glow{0%,100%{box-shadow:12px 12px 0 var(--goldbg)}50%{box-shadow:16px 16px 0 var(--goldbg),0 0 40px var(--goldbg)}}
+@keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.4)}100%{transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+@media(max-width:780px){.hero .g,.job,.two{grid-template-columns:1fr}.job{gap:8px}.hero{padding:40px 0 56px}.case{padding:24px}}
+@media(prefers-reduced-motion:reduce){.sim li{transition:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
+<div class="bar"><div class="wrap"><nav><b>Radha Kumari</b><div><a href="#projects">Projects</a><a href="#work">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a><button id="theme" type="button" aria-label="Switch light or dark theme">Theme</button></div></nav></div></div>
 
-<header>
-  <nav class="wrap">
-    <div class="brand">RADHA<span class="dot">·</span>KUMARI</div>
-    <div class="navlinks">
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
-      <a href="#skills">Skills</a>
-      <a href="#education">Education</a>
-      <a class="mono" href="mailto:radhajha1172@gmail.com">Contact →</a>
-    </div>
-  </nav>
-</header>
+<div class="hero"><div class="wrap"><div class="g">
+<div>
+<h1>I build the backend that turns a SIM card on.</h1>
+<p>C# .NET backend developer building activation and provisioning systems for T-Mobile, BOOM Network, SURF, Linkup and Xtream. I write the APIs and SQL behind each transaction, and I track down the ones that fail.</p>
+<div class="btns"><a class="btn p" href="#projects">Read my projects</a><a class="btn" href="#contact">Get in touch</a></div>
+<div class="stats"><div><b data-to="2.5" data-dec="1" data-suf="+">2.5+</b>years in telecom backend</div><div><b data-to="5">5</b>carrier platforms</div><div><b data-to="8.99" data-dec="2">8.99</b>MCA CGPA</div></div>
+</div>
+<div class="sim" aria-label="Example of an activation or recharge request flow">
+<header><strong id="stitle">Activation request</strong><span class="chip" aria-hidden="true"></span></header>
+<div class="seg" role="group" aria-label="Choose flow"><button type="button" data-m="act" aria-pressed="true">Activation</button><button type="button" data-m="rec" aria-pressed="false">Recharge</button></div>
+<div class="prog"><i id="pbar"></i></div>
+<ol id="steps" aria-live="polite"></ol>
+<button id="replay" type="button">Replay</button>
+</div>
+</div></div></div>
 
-<section class="hero wrap" style="border-top:none;">
-  <div class="eyebrow"><span class="pulse"></span>OPEN TO NEW ROLES</div>
-  <h1>Backend .Net developer</h1>
-  <p class="lede">.NET / ASP.NET Core developer with 2+ years building activation, provisioning, and transaction-processing systems across multi-carrier telecom platforms — T-Mobile, BOOM Network, SURF, and Linkup.</p>
-  <div class="hero-actions">
-    <a class="btn btn-primary" href="mailto:radhajha1172@gmail.com">Get in touch</a>
-    <a class="btn btn-ghost" href="https://github.com/radhaR15" target="_blank" rel="noopener">GitHub ↗</a>
-    <a class="btn btn-ghost" href="https://linkedin.com/in/radha-Kumari-339631211" target="_blank" rel="noopener">LinkedIn ↗</a>
-  </div>
+<section id="projects" class="alt"><div class="wrap">
+<h2>Projects</h2>
+<p class="lead">The systems I work on day to day. They are company projects, so I describe what I built and how it works rather than the internal code.</p>
 
-  <div class="console">
-    <div class="console-bar">
-      <span></span><span></span><span></span>
-      <div class="console-title">activation-service — live trace</div>
-    </div>
-    <div class="console-body" id="consoleBody"></div>
-  </div>
-</section>
+<div class="case">
+<h3>Multi-carrier SIM activation and provisioning platform</h3>
+<p class="sub">C#, ASP.NET Core, .NET Web API, Entity Framework, LINQ, SQL Server. Used across T-Mobile, BOOM Network, SURF, Linkup and Xtream.</p>
+<h4>The problem</h4>
+<p>When a customer buys a SIM, the number has to be validated, a plan attached and the carrier asked to switch the line on. Each carrier has its own API and its own responses, and a retailer needs one reliable system on top that records exactly what happened. A failed or duplicated activation costs money and leaves the subscriber without service.</p>
+<h4>How an activation moves through the system</h4>
+<p>Select a stage to see what my code does there.</p>
+<div class="steps" role="tablist" id="tabs"></div>
+<div id="panel" role="tabpanel" aria-live="polite"></div>
+<h4>What I own</h4>
+<ul>
+<li>The activation workflows in C# and ASP.NET Core, from first request to final status.</li>
+<li>The RESTful APIs that accept activation requests and the integrations that call each carrier.</li>
+<li>The SQL Server tables, joins and stored procedures that store every transaction and make it traceable.</li>
+</ul>
+<h4>What it delivers</h4>
+<p>A single, consistent activation process across several carriers, with transaction data that Support and Business teams can trust, and fewer failed activations because problems are found and fixed at the source.</p>
+</div>
 
-<section id="about">
-  <div class="wrap">
-    <div class="section-head"><span class="idx">01</span><h2>About</h2><div class="rule"></div></div>
-    <div class="about-grid">
-      <p>
-        Associate Software Developer with hands-on experience designing and supporting backend applications for telecom systems.
-        Strong expertise in SIM activation workflows, REST API development and integration, transaction processing, and database
-        operations. Proficient in C#, ASP.NET Core, .NET MVC, SQL Server, and Entity Framework — with a track record of resolving
-        production issues, optimizing backend performance, and collaborating across multi-carrier telecom platforms.
-      </p>
-      <div>
-        <div class="stat-card"><div class="num">2+ yrs</div><div class="lbl">Backend / telecom engineering</div></div>
-        <div class="stat-card"><div class="num">4</div><div class="lbl">Carrier platforms supported</div></div>
-        <div class="stat-card"><div class="num">8.99</div><div class="lbl">CGPA — MCA, SRM Institute</div></div>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="case">
+<h3>Commission, spiff and residual processing</h3>
+<p class="sub">SQL Server, stored procedures, query optimization, data validation.</p>
+<h4>The problem</h4>
+<p>Sales partners are paid for activations through commissions, one-time spiffs and ongoing residuals. If an activation record is wrong, the payout is wrong, and someone has to find out why.</p>
+<h4>What I built</h4>
+<ul>
+<li>Complex SQL queries, joins and stored procedures that calculate commission, spiff and residual amounts from activation data.</li>
+<li>Validation checks that compare activation records against payout records before they reach the business.</li>
+<li>Query tuning with indexes and cleaner joins so the calculations stay fast as data grows.</li>
+</ul>
+<h4>What it delivers</h4>
+<p>Payout figures that match the underlying activations, and a clear way to trace and resolve any discrepancy.</p>
+</div>
 
-<section id="experience">
-  <div class="wrap">
-    <div class="section-head"><span class="idx">02</span><h2>Experience</h2><div class="rule"></div></div>
+<div class="case">
+<h3>Failed-activation investigation and reconciliation</h3>
+<p class="sub">SQL Server, API debugging with Postman and Swagger, Azure DevOps.</p>
+<h4>The problem</h4>
+<p>Even a well-built flow fails sometimes: a carrier times out, a request is sent twice, or a record and its carrier status disagree.</p>
+<h4>How I work through it</h4>
+<ul>
+<li>Trace the transaction through its lifecycle, using the API response and the database record side by side.</li>
+<li>Find the cause: a failed carrier response, a duplicate transaction or a data mismatch.</li>
+<li>Fix the code or correct the data, then add a reconciliation check so the same issue is caught earlier next time.</li>
+<li>Work with QA, Support and Business teams so the fix matches what they see in the field.</li>
+</ul>
+<h4>What it delivers</h4>
+<p>Higher activation success rates and consistent, reliable subscriber records.</p>
+</div>
 
-    <div class="job">
-      <div class="job-head">
-        <h3>ENK Technologies Pvt. Ltd.</h3>
-        <span class="status-pill">● ACTIVE</span>
-      </div>
-      <div class="job-role">Associate Software Developer</div>
-      <div class="job-meta" style="margin-bottom:14px;">Noida, UP, India · Oct 2025 – Present</div>
-      <ul>
-        <li>Contributed to telecom activation and provisioning platforms supporting BOOM Network, T-Mobile, SURF, and Linkup carriers.</li>
-        <li>Engineered end-to-end SIM activation workflows covering MSISDN validation, plan assignment, and transaction lifecycle management.</li>
-        <li>Developed and consumed REST APIs to process activation requests, validate carrier responses, and handle success/failure scenarios.</li>
-        <li>Designed and executed database validations and reconciliation processes ensuring accuracy of activation transactions and subscriber records.</li>
-        <li>Supported commission, spiff, and residual calculation processes by validating activation data and resolving discrepancies in payout records.</li>
-        <li>Investigated and resolved failed activations, duplicate transactions, and data mismatches across internal and carrier systems.</li>
-        <li>Collaborated with QA, Support, and Business teams to improve activation success rates and reduce transaction failures.</li>
-      </ul>
-    </div>
+<div class="case">
+<h3>Recharge flow</h3>
+<p class="sub">C#, .NET Web API, SQL Server. Same multi-carrier approach as activation.</p>
+<h4>The problem</h4>
+<p>A recharge adds balance or a plan to a line that is already active. The money, the carrier and the subscriber's balance all have to agree, so a request that half-succeeds is worse than one that fails cleanly.</p>
+<h4>How a recharge moves through the system</h4>
+<ul>
+<li>Validate the subscriber's number and confirm the line can be recharged.</li>
+<li>Confirm the plan or amount, and check payment before the carrier is called.</li>
+<li>Call the carrier's recharge API and validate the response, handling success and failure separately.</li>
+<li>Save the final status and transaction in SQL Server so it can be traced and reconciled later.</li>
+</ul>
+<h4>What it delivers</h4>
+<p>Recharges that are recorded exactly once and can be traced from request to carrier response.</p>
+</div>
+</div></section>
 
-    <div class="job">
-      <div class="job-head">
-        <h3>Virtuzo Infosystems Pvt. Ltd.</h3>
-        <span class="status-pill" style="color:var(--muted);border-color:var(--line);background:transparent;">● COMPLETE</span>
-      </div>
-      <div class="job-role">Associate Software Developer</div>
-      <div class="job-meta" style="margin-bottom:14px;">Noida, UP, India · Aug 2024 – Sep 2025</div>
-      <ul>
-        <li>Designed and maintained SIM activation and provisioning workflows across BOOM Network, T-Mobile, SURF, and Xtream carriers.</li>
-        <li>Integrated backend APIs for MSISDN validation, activation status tracking, and full transaction lifecycle handling.</li>
-        <li>Wrote and optimized SQL queries for commission, spiff, and residual processing using stored procedures and joins.</li>
-        <li>Investigated and fixed backend issues related to failed or mismatched activation records, ensuring data consistency.</li>
-      </ul>
-    </div>
+<section id="work"><div class="wrap">
+<h2>Experience</h2>
+<div class="job"><div><strong>Oct 2025 – Present</strong><small>Noida, UP</small></div><div>
+<h3>Associate Software Developer</h3><small>ENK Technologies Pvt. Ltd.</small>
+<ul>
+<li>Engineer end-to-end SIM activation workflows in C# and ASP.NET Core: MSISDN validation, plan assignment and transaction lifecycle.</li>
+<li>Build and consume .NET Web APIs that process activation requests and validate carrier responses.</li>
+<li>Run database validations and reconciliation in SQL Server.</li>
+<li>Support commission, spiff and residual calculations and resolve payout discrepancies.</li>
+<li>Resolve failed activations, duplicates and data mismatches with QA, Support and Business teams.</li>
+</ul>
+<div class="tags"><span>BOOM Network</span><span>T-Mobile</span><span>SURF</span><span>Linkup</span></div>
+</div></div>
+<div class="job"><div><strong>Aug 2024 – Sep 2025</strong><small>Noida, UP</small></div><div>
+<h3>Associate Software Developer</h3><small>Virtuzo Infosystems Pvt. Ltd.</small>
+<ul>
+<li>Designed and maintained activation and provisioning workflows in C# and .NET.</li>
+<li>Integrated REST APIs for MSISDN validation and activation status tracking.</li>
+<li>Wrote and optimized SQL queries and stored procedures for commission, spiff and residual processing.</li>
+<li>Fixed backend issues behind failed or mismatched activation records.</li>
+</ul>
+<div class="tags"><span>BOOM Network</span><span>T-Mobile</span><span>SURF</span><span>Xtream</span></div>
+</div></div>
+<div class="job"><div><strong>Mar 2024 – Jul 2024</strong><small>Noida, UP</small></div><div>
+<h3>.NET Intern</h3><small>Virtuzo Infosystems Pvt. Ltd.</small>
+<ul>
+<li>Supported development of .NET backend applications for SIM activation.</li>
+<li>Integrated APIs and wrote SQL to validate activation and commission data.</li>
+<li>Helped senior developers with debugging and backend testing.</li>
+</ul>
+</div></div>
+</div></section>
 
-    <div class="job">
-      <div class="job-head">
-        <h3>Virtuzo Infosystems Pvt. Ltd.</h3>
-        <span class="status-pill" style="color:var(--muted);border-color:var(--line);background:transparent;">● COMPLETE</span>
-      </div>
-      <div class="job-role">.NET Intern</div>
-      <div class="job-meta" style="margin-bottom:14px;">Noida, UP, India · Mar 2024 – Jul 2024</div>
-      <ul>
-        <li>Assisted in development and support of .NET-based backend applications for SIM activation workflows.</li>
-        <li>Integrated APIs and supported transaction validation processes for telecom carrier platforms.</li>
-        <li>Wrote and optimized SQL queries to validate activation and commission data in SQL Server.</li>
-        <li>Supported senior developers in debugging, issue resolution, and backend testing activities.</li>
-      </ul>
-    </div>
-  </div>
-</section>
+<section id="skills" class="alt"><div class="wrap">
+<h2>Skills</h2>
+<div class="skills" style="margin-top:32px">
+<div><h3>Languages</h3><p>C#, SQL, JavaScript, HTML5, CSS3</p></div>
+<div><h3>Frameworks</h3><p>ASP.NET Core, ASP.NET MVC, Web Forms, .NET Web API, Entity Framework, LINQ</p></div>
+<div><h3>Databases</h3><p>Microsoft SQL Server, Oracle SQL, stored procedures, joins, indexes, query optimization</p></div>
+<div><h3>Testing</h3><p>xUnit, NUnit, API testing, debugging and troubleshooting</p></div>
+<div><h3>Tools</h3><p>Visual Studio, VS Code, SSMS, Git and GitHub, Postman, Swagger, IIS, Azure DevOps, CI/CD</p></div>
+<div><h3>Practices</h3><p>OOP, async/await, dependency injection, exception handling, RESTful API design, microservices concepts, Agile/Scrum</p></div>
+<div><h3>Domain</h3><p>Telecom activation and provisioning, SIM lifecycle management, commission and spiff processing</p></div>
+</div>
+</div></section>
 
-<section id="skills">
-  <div class="wrap">
-    <div class="section-head"><span class="idx">03</span><h2>Technical Skills</h2><div class="rule"></div></div>
-    <div class="skill-grid">
-      <div class="skill-cat">
-        <h4>Languages</h4>
-        <div class="chips">
-          <span class="chip">C#</span><span class="chip">SQL</span><span class="chip">JavaScript</span>
-          <span class="chip">HTML5</span><span class="chip">CSS3</span>
-        </div>
-      </div>
-      <div class="skill-cat">
-        <h4>Frameworks</h4>
-        <div class="chips">
-          <span class="chip">ASP.NET Core</span><span class="chip">ASP.NET MVC</span><span class="chip">Web Forms</span>
-          <span class="chip">.NET Web API</span><span class="chip">Entity Framework</span>
-        </div>
-      </div>
-      <div class="skill-cat">
-        <h4>Databases</h4>
-        <div class="chips">
-          <span class="chip">SQL Server</span><span class="chip">Oracle SQL</span><span class="chip">Stored Procedures</span>
-          <span class="chip">Joins</span><span class="chip">Indexes</span><span class="chip">Query Optimization</span>
-        </div>
-      </div>
-      <div class="skill-cat">
-        <h4>Tools & Platforms</h4>
-        <div class="chips">
-          <span class="chip">Visual Studio</span><span class="chip">VS Code</span><span class="chip">SSMS</span>
-          <span class="chip">Git & GitHub</span><span class="chip">Postman</span><span class="chip">Swagger</span><span class="chip">IIS</span>
-        </div>
-      </div>
-      <div class="skill-cat">
-        <h4>Concepts & Practices</h4>
-        <div class="chips">
-          <span class="chip">OOP</span><span class="chip">Async/Await</span><span class="chip">Dependency Injection</span>
-          <span class="chip">Exception Handling</span><span class="chip">API Testing</span><span class="chip">Debugging</span>
-        </div>
-      </div>
-      <div class="skill-cat">
-        <h4>Domain Knowledge</h4>
-        <div class="chips">
-          <span class="chip">Telecom Activation & Provisioning</span><span class="chip">SIM Lifecycle Mgmt</span>
-          <span class="chip">Commission & Spiff Processing</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<section><div class="wrap"><div class="two">
+<div>
+<h2 style="font-size:30px">Education</h2>
+<h3>MCA, SRM Institute of Science and Technology</h3>
+<p>Ghaziabad, UP. Jul 2022 – Jun 2024. CGPA 8.99 / 10.</p>
+</div>
+<div>
+<h2 style="font-size:30px">Awards and certifications</h2>
+<ul>
+<li>Rising Star Award, Virtuzo Infosystems (Best Performer of the Year)</li>
+<li>Oracle SQL Explorer Badge, Oracle</li>
+<li>Introduction to Generative AI, Google / Coursera</li>
+</ul>
+</div>
+</div></div></section>
 
-<section id="education">
-  <div class="wrap">
-    <div class="section-head"><span class="idx">04</span><h2>Education & Certifications</h2><div class="rule"></div></div>
-    <div class="two-col">
-      <div class="card">
-        <h3>Master of Computer Applications (MCA)</h3>
-        <div class="sub">SRM Institute of Science and Technology, Ghaziabad, UP</div>
-        <div class="mono">Jul 2022 – Jun 2024 · CGPA 8.99/10.0</div>
-      </div>
-      <div class="card">
-        <h3 style="margin-bottom:14px;">Certifications & Achievements</h3>
-        <div class="cert-row"><span>Oracle SQL Explorer Badge</span><span class="src">Oracle</span></div>
-        <div class="cert-row"><span>Introduction to Generative AI</span><span class="src">Google / Coursera</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="contact-box">
-      <h2>Let's build something reliable.</h2>
-      <p>Open to backend / .NET developer roles — reach out directly or connect below.</p>
-      <div class="contact-links">
-        <a class="btn btn-primary" href="mailto:radhajha1172@gmail.com">radhajha1172@gmail.com</a>
-        <a class="btn btn-ghost" href="tel:+917549647975">+91 7549647975</a>
-        <a class="btn btn-ghost" href="https://github.com/radhaR15" target="_blank" rel="noopener">GitHub</a>
-        <a class="btn btn-ghost" href="https://linkedin.com/in/radha-Kumari-339631211" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
-    </div>
-    <div class="foot-note">© 2026 Radha Kumari — India</div>
-  </div>
-</footer>
+<footer id="contact"><div class="wrap">
+<h2>Let's work together</h2>
+<p style="color:var(--mute);max-width:50ch;margin:0">Open to backend developer roles in .NET, APIs and SQL.</p>
+<div class="links">
+<a class="btn p" href="mailto:radhajha1172@gmail.com">radhajha1172@gmail.com</a>
+<a class="btn" href="https://linkedin.com/in/radha-Kumari-339631211" rel="noopener">LinkedIn</a>
+<a class="btn" href="https://github.com/radhaR15" rel="noopener">GitHub</a>
+</div>
+<small>Radha Kumari, India</small>
+</div></footer>
 
 <script>
-  // Activation console trace animation
-  const trace = [
-    { text: '> POST /api/activation/initiate', cls: '' },
-    { text: '  MSISDN validated ................ ', cls: 'ok', suffix: 'OK' },
-    { text: '  Carrier: [T-MOBILE]', cls: 'tag' },
-    { text: '  Plan assignment .................. ', cls: 'ok', suffix: 'OK' },
-    { text: '  Transaction lifecycle: OPEN → PROCESSING', cls: '' },
-    { text: '  Reconciliation check .............. ', cls: 'ok', suffix: 'OK' },
-    { text: '> STATUS: ACTIVATED', cls: 'ok', bold: true }
-  ];
+(function(){
+var F={act:['Activation request',[['ICCID validated','SIM serial number checked and eligible'],['Plan assigned','carrier plan matched to subscriber'],['Carrier API called','response checked, failures handled'],['Transaction recorded','SQL Server, ready for reconciliation'],['Status: ACTIVE','commission data validated']]],rec:['Recharge request',[['Number validated','subscriber line found and eligible'],['Recharge plan selected','amount and validity confirmed'],['Payment confirmed','charge verified before the carrier call'],['Carrier recharge API called','response checked, failures handled'],['Status: RECHARGED','balance and transaction saved']]]};
+var mode='act',t=[],ol=document.getElementById('steps'),pb=document.getElementById('pbar'),segs=document.querySelectorAll('.seg button');
+function run(){t.forEach(clearTimeout);t=[];var d=F[mode],n=d[1].length;document.getElementById('stitle').textContent=d[0];ol.innerHTML=d[1].map(function(s){return '<li><span>✓</span><div>'+s[0]+'<em>'+s[1]+'</em></div></li>'}).join('');pb.style.width='0';var items=ol.querySelectorAll('li');items.forEach(function(li,i){t.push(setTimeout(function(){li.classList.add('on');pb.style.width=((i+1)/n*100)+'%'},400+i*650))})}
+segs.forEach(function(b){b.addEventListener('click',function(){mode=b.dataset.m;segs.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});run()})});
+document.getElementById('replay').addEventListener('click',run);run();
+var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+document.querySelectorAll('.stats b').forEach(function(el){var to=parseFloat(el.dataset.to),dec=+(el.dataset.dec||0),suf=el.dataset.suf||'';if(rm){return}var s=null;function f(ts){if(!s)s=ts;var p=Math.min((ts-s)/1400,1),e=1-Math.pow(1-p,3);el.textContent=(to*e).toFixed(dec)+(p===1?suf:'');if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)});
+if(!rm&&'IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});document.querySelectorAll('.case,.job,.skills>div,.two>div').forEach(function(el){el.classList.add('rv');io.observe(el)})}
 
-  const body = document.getElementById('consoleBody');
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var S=[
+["1. Validate the ICCID","The request arrives through a .NET Web API. Before anything is sent to a carrier, my code checks the ICCID (the SIM card's serial number) for format and eligibility. Bad requests are rejected early with a clear reason."],
+["2. Assign the plan","The code matches the subscriber to the correct plan for that carrier, so the carrier receives a complete and valid request."],
+["3. Call the carrier","The activation request is sent to the carrier's API. I validate the response and handle both outcomes: success moves forward, failure is recorded with its reason instead of being lost."],
+["4. Track the transaction","Every activation has a lifecycle, from requested through pending to active or failed. Each change is saved in SQL Server so the status is always known and traceable."],
+["5. Reconcile and pay","Validation queries compare activation records with what was sent and received, and the clean data feeds commission, spiff and residual calculations."]
+];
+var tabs=document.getElementById('tabs'),panel=document.getElementById('panel'),bs=[];
+function pick(i){bs.forEach(function(b,j){b.setAttribute('aria-selected',j===i?'true':'false')});panel.innerHTML='<strong>'+S[i][0]+'</strong><p style="margin-top:6px">'+S[i][1]+'</p>'}
+S.forEach(function(s,i){var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.textContent=s[0];b.onclick=function(){pick(i)};tabs.appendChild(b);bs.push(b)});
+pick(0);
 
-  function renderStatic(){
-    body.innerHTML = trace.map(l => {
-      const suf = l.suffix ? `<span class="${l.cls}">${l.suffix}</span>` : '';
-      return `<div class="line" style="opacity:1;">${l.text}${suf}</div>`;
-    }).join('');
-  }
-
-  function renderAnimated(){
-    let i = 0;
-    function next(){
-      if(i >= trace.length){
-        const c = document.createElement('span');
-        c.className = 'caret';
-        body.appendChild(c);
-        return;
-      }
-      const l = trace[i];
-      const div = document.createElement('div');
-      div.className = 'line' + (l.bold ? '' : '');
-      div.style.color = l.bold ? 'var(--signal)' : '';
-      div.style.fontWeight = l.bold ? '600' : '400';
-      div.innerHTML = l.text + (l.suffix ? `<span class="${l.cls}">${l.suffix}</span>` : '');
-      body.appendChild(div);
-      i++;
-      setTimeout(next, 420);
-    }
-    next();
-  }
-
-  reduced ? renderStatic() : renderAnimated();
-
-  // Scroll reveal for job cards
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if(e.isIntersecting){
-        e.target.style.transition = 'opacity .5s ease, transform .5s ease';
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.job, .skill-cat, .card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(14px)';
-    obs.observe(el);
-  });
+var r=document.documentElement,btn=document.getElementById('theme');
+btn.onclick=function(){var dark=r.getAttribute('data-theme')?r.getAttribute('data-theme')==='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.setAttribute('data-theme',dark?'light':'dark')};
+})();
 </script>
-
 </body>
 </html>
